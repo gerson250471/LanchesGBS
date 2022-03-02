@@ -23,7 +23,7 @@ namespace LanchesGBS.Controllers
             if (string.IsNullOrEmpty(categoria))
             {
                 lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
-                categoriaAtual = "Todos os Lanches"; 
+                categoriaAtual = "Todos os Lanches";
             }
             else
             {
@@ -32,7 +32,7 @@ namespace LanchesGBS.Controllers
                     .OrderBy(l => l.Nome);
                 categoriaAtual = categoria;
             }
- 
+
             var lanchesListViewModel = new LancheListViewModel
             {
                 lanches = lanches,
@@ -48,5 +48,34 @@ namespace LanchesGBS.Controllers
             return View(lanche);
         }
 
+
+        public ViewResult Search(string searchString)
+        {
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
+
+            if (string.IsNullOrEmpty(searchString))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(p => p.LancheId);
+                categoriaAtual = "Todos os Lanches";
+            }
+            else
+            {
+                lanches = _lancheRepository.Lanches
+                          .Where(p => p.Nome.ToLower().Contains(searchString.ToLower()));
+
+                if (lanches.Any())
+                    categoriaAtual = "Lanches";
+                else
+                    categoriaAtual = "Nenhum lanche foi encontrado";
+            }
+
+            return View("~/Views/Lanche/List.cshtml", new LancheListViewModel
+            {
+                lanches = lanches,
+                CategoriaAtual = categoriaAtual
+            });
+
+        }
     }
 }
