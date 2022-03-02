@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LanchesGBS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220301130435_PedidoDetalhes")]
-    partial class PedidoDetalhes
+    [Migration("20220302004635_PedidosDetalhe")]
+    partial class PedidosDetalhe
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
